@@ -41,4 +41,9 @@ public class ControladorFuncionalidadesIntro {
 
     }
 
+    public static ControladorFuncionalidadesIntro getControlador() {
+
+        return CONTROLLER;
+    }
+
 }

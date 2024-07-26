@@ -26,7 +26,7 @@ public class DataBaseConfig {
         verifyConnection = false;
         
         try {
-            configProperties = new FileInputStream("./agencia/src/main/java/com/crudfiltro/Resources/Config.properties");
+            configProperties = new FileInputStream("./crudfiltro/src/main/java/com/crudfiltro/Resources/Config.properties");
             Properties properties = new Properties();
             properties.load(configProperties);
             URL = properties.getProperty("mydb.URL");
