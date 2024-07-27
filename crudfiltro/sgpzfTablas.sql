@@ -233,3 +233,75 @@ INSERT INTO sgpzf.city (id, name, idregion) VALUES (81, 'Ciénaga', 39);
 INSERT INTO sgpzf.city (id, name, idregion) VALUES (82, 'Fundación', 39);
 INSERT INTO sgpzf.city (id, name, idregion) VALUES (83, 'El Banco', 39);
 INSERT INTO sgpzf.city (id, name, idregion) VALUES (84, 'Plato', 39);
+
+------------------------------------------ PROCEDURES -------------------------------------------------
+
+-- Procedimiento para extrar las ciudades
+drop procedure if exists extraerciudades;
+
+delimiter $$
+
+create procedure extraerCiudades ()
+begin
+		select 	ci.id,
+				concat (ci.name, '-', r.name, '-', co.name) as ciudad
+		from	sgpzf.city as ci,
+				sgpzf.country as co,
+                sgpzf.region as r
+		where	ci.idregion = r.id and
+				r.idcountry = co.id;
+end $$
+
+delimiter ;
+
+
+-- procedimiento para extraer los generos 
+drop procedure if exists extraerGeneros;
+
+delimiter $$
+
+create procedure extraerGeneros()
+begin
+		select 	id, name as genero
+        from	sgpzf.gender;
+end $$
+
+delimiter ;
+
+-- Procedimiento para extraer los emails
+drop procedure if exists extraerEmails;
+
+delimiter $$
+
+create procedure extraerEmails()
+begin
+		select email
+        from sgpzf.persons;
+end $$
+
+delimiter ;
+
+-- procedimiento para Registrar Persona
+drop procedure if exists registrarPersona;
+
+delimiter $$
+
+create procedure registrarPersona(
+    in nameEntra varchar(50),
+    in lastnameEntra varchar(50),
+    in idCityEntra int,
+    in addressEntra varchar(50),
+    in ageEntra int,
+    in emailEntra varchar(100),
+    in idgenderEntra int
+)
+begin
+		insert into sgpzf.persons(name, lastname, idcity, address, age, email, idgender) values
+        (nameEntra, lastnameEntra, idcityEntra, addressEntra, ageEntra, emailEntra, idgenderEntra);
+        
+        select count(email) as cantidadInsertada
+        from sgpzf.persons
+        where email = emailEntra;
+end $$
+
+delimiter ;

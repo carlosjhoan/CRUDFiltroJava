@@ -28,6 +28,8 @@ public class CheckInt {
                 scanner.next();
             }
         }
+
+        
         return opcion;
 
     }
