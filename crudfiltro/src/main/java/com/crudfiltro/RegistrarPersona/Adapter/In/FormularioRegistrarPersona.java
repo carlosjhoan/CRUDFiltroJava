@@ -8,6 +8,7 @@ import com.crudfiltro.RegistrarPersona.Application.ExtraerEmailsAccion;
 import com.crudfiltro.RegistrarPersona.Application.ExtraerGenerosAccion;
 import com.crudfiltro.RegistrarPersona.Application.InsertarPersonaAccion;
 import com.crudfiltro.RegistrarPersona.Domain.Entity.Persona;
+import com.crudfiltro.Verifiers.CheckEmail;
 import com.crudfiltro.Verifiers.CheckInt;
 import com.crudfiltro.Verifiers.CheckString;
 
@@ -62,6 +63,7 @@ public class FormularioRegistrarPersona {
 
         // Valores para validar email
         boolean checkEmail = false;
+        boolean verifyEmail = false;
         boolean exitEmail = false;
         String email = ""; 
         List<String> listaEmails = null;
@@ -277,36 +279,56 @@ public class FormularioRegistrarPersona {
                 System.out.print(">>> ");
     
                 email = CheckString.check("Ingrese el email nuevamente");
+
+                verifyEmail = CheckEmail.check(email.trim());
+
+                if (verifyEmail == true) {
+
+                    if (email.toLowerCase().trim().equals("exit")) {
     
-                if (email.toLowerCase().trim().equals("exit")) {
-    
-                    System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                    System.out.println("x    REGISTRO CANCELADO   x");
-                    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                    exitEmail = true;
-                    Main.main(null);
-    
-    
-    
-                } else {
-                    
-                    if (listaEmails.contains(email)) {
-    
-                        System.out.println("\n********************************************");
-                        System.out.println("*              NO ES POSIBLE               *");
-                        System.out.println("*------------------------------------------*");
-                        System.out.println("*  Este email ya se encuentra registrado   *");
-                        System.out.println("********************************************\n");
-    
-                    } else {
-    
+                        System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                        System.out.println("x    REGISTRO CANCELADO   x");
+                        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx");
                         exitEmail = true;
-                        checkEmail = true;
-    
+                        Main.main(null);
+        
+        
+        
+                    } else {
+                        
+                        if (listaEmails.contains(email)) {
+        
+                            System.out.println("\n********************************************");
+                            System.out.println("*              NO ES POSIBLE               *");
+                            System.out.println("*------------------------------------------*");
+                            System.out.println("*  Este email ya se encuentra registrado   *");
+                            System.out.println("********************************************\n");
+        
+                        } else {
+        
+                            exitEmail = true;
+                            checkEmail = true;
+        
+                        }
+        
+                        
                     }
-    
-                    
+
+
+
+                } else {
+
+                    System.out.println("\n********************************************");
+                    System.out.println("*           FORMATO INCORRECTO             *");
+                    System.out.println("*------------------------------------------*");
+                    System.out.println("*  El formato es [ejemplo@cualquiera.com]  *");
+                    System.out.println("********************************************\n");
+
                 }
+
+                
+                //
+                
                 
             }
 
